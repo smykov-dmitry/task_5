@@ -8,8 +8,8 @@ document.getElementsByTagName("head")[0].appendChild(script);
 
 function callbackFunc(result) {
     do {
-        var rt = document.getElementById('spinner');
-        rt.style.display = 'flex';
+        var spinnerLayer = document.getElementById('spinner');
+        spinnerLayer.style.display = 'flex';
         pics = result.response.items;
     }
     while (pics.length < 106)
@@ -23,9 +23,9 @@ function callbackFunc(result) {
             for (j=0; j<3;j++) {
                 var pic = document.createElement('img');
                 pic.id = (i+j).toString();
-                pic.addEventListener("click", f);
-                pic.addEventListener("mouseenter", fh);
-                pic.addEventListener("mouseleave", fh2);
+                pic.addEventListener("click", showModal);
+                pic.addEventListener("mouseenter", inHover);
+                pic.addEventListener("mouseleave", outHover);
                 pic.src = pics[i+j].sizes[3].url;
                 row.appendChild(pic);
             }
@@ -34,37 +34,34 @@ function callbackFunc(result) {
     }
 }
 
-function fh (event) {
-    var op = document.getElementById(event.target.id);
-    op.style.opacity = '0.7';
-    op.style.cursor = 'pointer';
+function inHover (event) {
+    var hoverPic = document.getElementById(event.target.id);
+    hoverPic.style.opacity = '0.7';
+    hoverPic.style.cursor = 'pointer';
 }
 
-function fh2 (event) {
-    var op = document.getElementById(event.target.id);
-    op.style.opacity = '1';
+function outHover (event) {
+    var hoverPic = document.getElementById(event.target.id);
+    hoverPic.style.opacity = '1';
 }
 
-function f (event) {
-    /*var rt = document.getElementById('spinner');
-    rt.style.display = 'flex';*/
+function showModal (event) {
     var modal = document.getElementById('modal');
     var picContainer = document.getElementById('pic-container');
     var crossClose = document.getElementById('cross-close');
+    var leftArrow = document.getElementById('left-arrow');
+    var rightArrow = document.getElementById('left-arrow');
     var bigView = document.createElement('div');
     var carousel = document.getElementById('carousel');
+    var counter = document.getElementById('counter');
     document.getElementById('pic-container').innerHTML = "";
     document.getElementById('carousel').innerHTML = "";
-    crossClose.addEventListener("click", f2);
-    function f2 () {
+    crossClose.addEventListener("click", closeModal);
+    function closeModal() {
         modal.style.display = 'none';
         document.getElementById('pic-container').innerHTML = "";
         document.getElementById('carousel').innerHTML = "";
     }
-    /*var rt = document.getElementById('spinner');
-    rt.style.display = 'flex';
-    setTimeout(function(){document.getElementById('spinner').style.display = 'none';}, 2000);*/
-
     modal.style.display = 'flex';
     modal.style.flexDirection = 'column';
     modal.style.alignItems = 'center';
@@ -83,19 +80,15 @@ function f (event) {
                 if(tmp>107) {
                     tmp = tmp - 108;
                 }
-                var pic6 = document.createElement('img');
-                pic6.id = tmp;
-                pic6.src = pics[tmp].sizes[0].url;
-                /*if(j == 0) {
-                    pic6.id = '123';
-                    var t = document.getElementById('123');
-                    t.style.border = '1vh solid #ffffff';
-                }
-                pic6.id = tmp;*/
-                pic6.addEventListener("click", f);
-                pic6.addEventListener("mouseenter", fh);
-                pic6.addEventListener("mouseleave", fh2);
-                carousel.appendChild(pic6);
+                var carouselPic = document.createElement('img');
+                carouselPic.id = tmp;
+                carouselPic.src = pics[tmp].sizes[0].url;
+                carouselPic.addEventListener("click", showModal);
+                carouselPic.addEventListener("mouseenter", inHover);
+                carouselPic.addEventListener("mouseleave", outHover);
+                carousel.appendChild(carouselPic);
+                counter.innerHTML = "";
+                counter.innerHTML = (i+1) + "/" + pics.length;
             }
         }
     }
