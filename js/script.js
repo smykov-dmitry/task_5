@@ -7,6 +7,7 @@ script.src = url + '&callback=callbackFunc';
 document.getElementsByTagName("head")[0].appendChild(script);
 
 function callbackFunc(result) {
+    console.log(result);
     do {
         var spinnerLayer = document.getElementById('spinner');
         spinnerLayer.style.display = 'flex';
@@ -26,7 +27,7 @@ function callbackFunc(result) {
                 pic.addEventListener("click", showModal);
                 pic.addEventListener("mouseenter", inHover);
                 pic.addEventListener("mouseleave", outHover);
-                pic.src = pics[i+j].sizes[3].url;
+                pic.src = pics[i+j].sizes[7].url;
                 row.appendChild(pic);
             }
             photos.appendChild(row);
@@ -69,7 +70,7 @@ function showModal (event) {
     for(var i=0; i<pics.length; i++) {
         if(event.target.id == i) {
             var pic = document.createElement('img');
-            pic.src = pics[i].sizes[6].url;
+            pic.src = pics[i].sizes[2].url;
             bigView.appendChild(pic);
             picContainer.appendChild(bigView);
             for(j=-2; j<3; j++) {
@@ -82,7 +83,7 @@ function showModal (event) {
                 }
                 var carouselPic = document.createElement('img');
                 carouselPic.id = tmp;
-                carouselPic.src = pics[tmp].sizes[0].url;
+                carouselPic.src = pics[tmp].sizes[1].url;
                 carouselPic.addEventListener("click", showModal);
                 carouselPic.addEventListener("mouseenter", inHover);
                 carouselPic.addEventListener("mouseleave", outHover);
